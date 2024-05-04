@@ -34,7 +34,7 @@ const Hero: FC<Props> = (props) => {
       <div className="1000px:w-[40%] flex 1000px:min-h-screen items-center justify-end pt-[70px] 1000px:pt-[0] z-10">
         <Image
         //   src={data?.layout?.banner?.image?.url}
-        src={require("../../../public/assests/client-1.jpg")}
+        src={require("../../../public/assests/thumbnails.png")}
           width={400}
           height={400}
           alt=""
@@ -43,11 +43,11 @@ const Hero: FC<Props> = (props) => {
       </div>
       <div className="1000px:w-[60%] flex flex-col items-center 1000px:mt-[0px] text-center 1000px:text-left mt-[150px]">
         <h2 className="dark:text-white text-[#000000c7] text-[30px] px-3 w-full 1000px:text-[70px] font-[600] font-Josefin py-2 1000px:leading-[75px] 1500px:w-[60%] 1100px:w-[78%]">
-          {/* {data?.layout?.banner?.title} */}fgdgfdh
+          {/* {data?.layout?.banner?.title} */}Improve your online learning experience better
         </h2>
         <br />
         <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
-         {/* {data?.layout?.banner?.subTitle} */}hhhh
+         {/* {data?.layout?.banner?.subTitle} */}Don't be left behind, pick up your laptop and sign up for our latest programming courses and increase your income.
         </p>
         <br />
         <br />
