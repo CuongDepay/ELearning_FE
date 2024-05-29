@@ -72,27 +72,25 @@ const Footer = (props: Props) => {
             <h3 className="text-[20px] font-[600] text-black dark:text-white">Social Links</h3>
             <ul className="space-y-4">
               <li>
-                <Link
-                  href="https://www.youtube.com/channel/"
+                <div
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Youtube
-                </Link>
+                </div>
               </li>
               <li>
-                <Link
-                  href="https://www.instagram.com/"
+                <div
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
                   Instagram
-                </Link>
+                </div>
               </li>
               <li>
                 <Link
                   href="https://www.github.com/"
                   className="text-base text-black dark:text-gray-300 dark:hover:text-white"
                 >
-                  github
+                  Github
                 </Link>
               </li>
             </ul>
@@ -100,22 +98,22 @@ const Footer = (props: Props) => {
           <div>
             <h3 className="text-[20px] font-[600] text-black dark:text-white pb-3">Contact Info</h3>
             <p className="text-base text-black dark:text-gray-300 dark:hover:text-white pb-2">
-            Call Us: 1-885-665-2022
+            Call Us: 0346844000
             </p>
            
             <p className="text-base text-black dark:text-gray-300 dark:hover:text-white pb-2">
-            Address: +7011 Vermont Ave, Los Angeles, CA 90044
+            Address: Da Nang University of Science and Technology
             </p>
          
             <p className="text-base text-black dark:text-gray-300 dark:hover:text-white  pb-2">
-            Mail Us: hello@elearning.com
+            Mail Us: support@elearning.com
             </p>
             
           </div>
         </div>
         <br />
         <p className="text-center text-black dark:text-white">
-          Copyright © 2023 Elearning | All Rights Reserved
+          Copyright © 2024 Elearning | All Rights Reserved
         </p>
       </div>
       <br />

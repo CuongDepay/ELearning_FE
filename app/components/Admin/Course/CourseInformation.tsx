@@ -20,7 +20,6 @@ const CourseInformation: FC<Props> = ({
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    console.log("data categories",data);
     if (data) {
       setCategories(data.layout.categories);
     }

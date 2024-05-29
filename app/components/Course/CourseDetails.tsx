@@ -30,7 +30,7 @@ const CourseDetails = ({
   const { data: userData,refetch } = useLoadUserQuery(undefined, {});
   const [user, setUser] = useState<any>();
   const [open, setOpen] = useState(false);
-
+  console.log("data", data, stripePromise);
   useEffect(() => {
     setUser(userData?.user);
   }, [userData]);
@@ -218,10 +218,10 @@ const CourseDetails = ({
               <CoursePlayer videoUrl={data?.demoUrl} title={data?.title} />
               <div className="flex items-center">
                 <h1 className="pt-5 text-[25px] text-black dark:text-white">
-                  {data.price === 0 ? "Free" : data.price + "$"}
+                  {data.price === 0 ? "Free" : data.price + "VND"}
                 </h1>
                 <h5 className="pl-3 text-[20px] mt-2 line-through opacity-80 text-black dark:text-white">
-                  {data.estimatedPrice}$
+                  {data.estimatedPrice}VND
                 </h5>
 
                 <h4 className="pl-5 pt-4 text-[22px] text-black dark:text-white">
@@ -241,7 +241,7 @@ const CourseDetails = ({
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
                     onClick={handleOrder}
                   >
-                    Buy Now {data.price}$
+                    Buy Now {data.price}VND
                   </div>
                 )}
               </div>
