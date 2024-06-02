@@ -30,7 +30,7 @@ const Profile: FC<Props> = ({ user }) => {
   const logOutHandler = async () => {
     setLogout(true);
     await signOut();
-    router.push("/");
+    // router.push("/");
   };
 
   if (typeof window !== "undefined") {

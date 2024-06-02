@@ -26,7 +26,8 @@ const AllCourses = (props: Props) => {
   );
   const [deleteCourse, { isSuccess, error }] = useDeleteCourseMutation({});
   const columns = [
-    { field: "id", headerName: "ID", flex: 0.5 },
+    // { field: "id", headerName: "ID",  hide: false },
+    { field: "stt", headerName: "STT", flex: 0 },
     { field: "title", headerName: "Course Title", flex: 1 },
     { field: "ratings", headerName: "Ratings", flex: 0.5 },
     { field: "purchased", headerName: "Purchased", flex: 0.5 },
@@ -73,9 +74,10 @@ const AllCourses = (props: Props) => {
 
   {
     data &&
-      data.courses.forEach((item: any) => {
+      data.courses.forEach((item: any, i: number) => {
         rows.push({
           id: item._id,
+          stt: i+1,
           title: item.name,
           ratings: item.ratings,
           purchased: item.purchased,
