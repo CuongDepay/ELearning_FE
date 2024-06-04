@@ -47,7 +47,7 @@ const Hero: FC<Props> = (props) => {
         </h2>
         <br />
         <p className="dark:text-[#edfff4] text-[#000000ac] font-Josefin font-[600] text-[18px] 1500px:!w-[55%] 1100px:!w-[78%]">
-         {/* {data?.layout?.banner?.subTitle} */}Don't be left behind, pick up your laptop and sign up for our latest programming courses and increase your income.
+         {/* {data?.layout?.banner?.subTitle} */}Don&prime;t be left behind, pick up your laptop and sign up for our latest programming courses and increase your income.
         </p>
         <br />
         <br />
