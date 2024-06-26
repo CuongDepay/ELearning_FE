@@ -1,5 +1,4 @@
 import { styles } from "@/app/styles/style";
-import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
 import {
   LinkAuthenticationElement,
@@ -7,26 +6,28 @@ import {
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { toast } from "react-hot-toast";
 import socketIO from "socket.io-client";
+
 const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
 const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
 
 type Props = {
   setOpen: any;
   data: any;
-  user:any;
-  refetch:any;
+  user: any;
+  refetch: any;
 };
 
-const CheckOutForm = ({ data,user,refetch }: Props) => {
+const CheckOutForm = ({ data, user, refetch }: Props) => {
   const stripe = useStripe();
   const elements = useElements();
   const [message, setMessage] = useState<any>("");
   const [createOrder, { data: orderData, error }] = useCreateOrderMutation();
   const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -38,33 +39,35 @@ const CheckOutForm = ({ data,user,refetch }: Props) => {
       elements,
       redirect: "if_required",
     });
+
     if (error) {
       setMessage(error.message);
       setIsLoading(false);
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      const orderCreationResponse = await createOrder({ courseId: data._id, payment_info: paymentIntent });
       setIsLoading(false);
-      createOrder({ courseId: data._id, payment_info: paymentIntent });
+      if (orderCreationResponse) {
+        router.push(`/course-access/${data._id}`);
+      }
     }
   };
 
   useEffect(() => {
-   if(orderData){
-    refetch();
-    socketId.emit("notification", {
-       title: "New Order",
-       message: `You have a new order from ${data.name}`,
-       userId: user._id,
-    });
-    redirect(`/course-access/${data._id}`);
-   }
-   if(error){
-    if ("data" in error) {
+    if (orderData) {
+      refetch();
+      socketId.emit("notification", {
+        title: "New Order",
+        message: `You have a new order from ${data.name}`,
+        userId: user._id,
+      });
+    }
+    if (error) {
+      if ("data" in error) {
         const errorMessage = error as any;
         toast.error(errorMessage.data.message);
       }
-   }
-  }, [orderData,error])
-  
+    }
+  }, [orderData, error]);
 
   return (
     <form id="payment-form" onSubmit={handleSubmit}>

@@ -11,6 +11,9 @@ import CheckOutForm from "../Payment/CheckOutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import Image from "next/image";
 import { VscVerifiedFilled } from "react-icons/vsc";
+import { useCreateOrderMutation } from "@/redux/features/orders/ordersApi";
+import { redirect, useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
   data: any;
@@ -27,10 +30,11 @@ const CourseDetails = ({
   setRoute,
   setOpen: openAuthModal,
 }: Props) => {
-  const { data: userData,refetch } = useLoadUserQuery(undefined, {});
+  const [createOrder, { data: orderData, error }] = useCreateOrderMutation();
+  const { data: userData, refetch } = useLoadUserQuery(undefined, {});
   const [user, setUser] = useState<any>();
   const [open, setOpen] = useState(false);
-  console.log("data", data, stripePromise);
+  const router = useRouter();
   useEffect(() => {
     setUser(userData?.user);
   }, [userData]);
@@ -42,6 +46,31 @@ const CourseDetails = ({
 
   const isPurchased =
     user && user?.courses?.find((item: any) => item._id === data._id);
+
+  useEffect(() => {
+    if (orderData) {
+      refetch();
+      router.push(`/course-access/${data._id}`);
+    }
+    if (error) {
+      if ("data" in error) {
+        const errorMessage = error as any;
+        toast.error(errorMessage.data.message);
+      }
+    }
+  }, [orderData, error]);
+  const handleOrderFreeCourse = (e: any) => {
+    if (user) {
+      if (!isPurchased) {
+        createOrder({ courseId: data._id, payment_info: null });
+      } else {
+        router.push(`/course-access/${data._id}`);
+      }
+    } else {
+      setRoute("Login");
+      openAuthModal(true);
+    }
+  };
 
   const handleOrder = (e: any) => {
     if (user) {
@@ -229,13 +258,13 @@ const CourseDetails = ({
                 </h4>
               </div>
               <div className="flex items-center">
-                {isPurchased ? (
-                  <Link
+                {isPurchased || data.price === 0 ? (
+                  <div
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
-                    href={`/course-access/${data._id}`}
+                    onClick={handleOrderFreeCourse}
                   >
                     Enter to Course
-                  </Link>
+                  </div>
                 ) : (
                   <div
                     className={`${styles.button} !w-[180px] my-3 font-Poppins cursor-pointer !bg-[crimson]`}
@@ -276,7 +305,12 @@ const CourseDetails = ({
               <div className="w-full">
                 {stripePromise && clientSecret && (
                   <Elements stripe={stripePromise} options={{ clientSecret }}>
-                    <CheckOutForm setOpen={setOpen} data={data} user={user} refetch={refetch} />
+                    <CheckOutForm
+                      setOpen={setOpen}
+                      data={data}
+                      user={user}
+                      refetch={refetch}
+                    />
                   </Elements>
                 )}
               </div>
