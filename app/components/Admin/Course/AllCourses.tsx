@@ -39,9 +39,13 @@ const AllCourses = (props: Props) => {
       renderCell: (params: any) => {
         return (
           <>
+            <Button>
+
             <Link href={`/admin/edit-course/${params.row.id}`}>
               <FiEdit2 className="dark:text-white text-black" size={20} />
             </Link>
+            </Button>
+            
           </>
         );
       },
