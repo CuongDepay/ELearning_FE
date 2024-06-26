@@ -1,6 +1,6 @@
 import { styles } from "@/app/styles/style";
 import { useGetOrdersAnalyticsQuery } from "@/redux/features/analytics/analyticsApi";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   LineChart,
   Line,
@@ -51,12 +51,18 @@ type Props = {
 export default function OrdersAnalytics({ isDashboard }: Props) {
   const {data, isLoading } = useGetOrdersAnalyticsQuery({});
 
-  const analyticsData: any = [];
+  const [analyticsData,setAnalyticsData ] = useState( []);
 
-  data &&
-    data.orders.last12Months.forEach((item: any) => {
-      analyticsData.push({ name: item.name, Count: item.count });
-    });
+  useEffect(() => {
+    if (data) {
+      const newData = data.orders.last12Months.map((item: any) => ({
+        month: item.month,
+        Count: item.count
+      }));
+      setAnalyticsData(newData); 
+    }
+  }, [data]);
+  
 
   return (
     <>
@@ -101,7 +107,7 @@ export default function OrdersAnalytics({ isDashboard }: Props) {
                 }}
               >
                 <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
+                <XAxis dataKey="month" />
                 <YAxis />
                 <Tooltip />
                 {!isDashboard && <Legend />}
